@@ -1,0 +1,4 @@
+3d_plot:
+  * Curvas paramétricas
+  * Superficies
+  * Wireframes
