@@ -1,3 +1,5 @@
 # bilait
 
-(Perhaps) Kinda useful code.
+* Python.
+* Plot.
+* Métodos Numéricos.
