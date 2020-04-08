@@ -36,7 +36,7 @@ y[:, 0] = np.array([0.00125*i for i in range(100) if i<81 else 0.1 - 0.005*(i-80
 #NOTA: Estabas haciendo doble iteracion para algo que solo necesitaba solo una iteracion, en este caso es tolerable pues son numeros perqueños pero si tu iteracion
 # fuera sobre 1, 2, ...., 10000000000000000000000000000, tu programa te daria un pesimo rendimiento, asi que trata de evitar usar mucho bucles
 fun = lambda y, i, v, v_prim: 2*y[i,1]-y[i,1] + 0.5*(v/v_prim)**2*(y[i+1,1]+y[i-1,1]-2*y[i,1])   
-y[:, 1:3]= np.array([[fun(i, 1), fun(i, 2)] for i in range(99)])
+y[:, 1:3]= np.array([[fun(i, 1v, v_prim), fun(i, 2, v, v_prim)] for i in range(99)])
 
 for i in range(1,99):
     for j in range(2,999):
