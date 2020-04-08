@@ -20,18 +20,30 @@ v_prim = v #CFL: v<=v'=delta(x)/delta(t)
 y = np.zeros((100,1000)) # y[filas=x][columnas=t]
 
 #Condiciones iniciales
-for i in range(0,81): y[i,0] = 0.00125*i
-for i in range(81,100): y[i,0] = 0.1 - 0.005*(i-80)
+#for i in range(0,81): y[i,0] = 0.00125*i
+#for i in range(81,100): y[i,0] = 0.1 - 0.005*(i-80)
 
+# Forma mas simple y eficiente de inicializar condiciones iniciales (NOTA: no uses muchos bucles)
+y[:, 0] = np.array([0.00125*i for i in range(100) if i<81 else 0.1 - 0.005*(i-80)])
+                       
+
+    
 #Algoritmo
-for i in range(1,99): 
-    y[i,1] = 2*y[i,0]-y[i,0] + 0.5*(v/v_prim)**2*(y[i+1,0]+y[i-1,0]-2*y[i,0])
-for i in range(1,99):
-    y[i,2] = 2*y[i,1]-y[i,1] + 0.5*(v/v_prim)**2*(y[i+1,1]+y[i-1,1]-2*y[i,1])
+#for i in range(1,99): 
+#    y[i,1] = 2*y[i,0]-y[i,0] + 0.5*(v/v_prim)**2*(y[i+1,0]+y[i-1,0]-2*y[i,0])
+#for i in range(1,99):
+#    y[i,2] = 2*y[i,1]-y[i,1] + 0.5*(v/v_prim)**2*(y[i+1,1]+y[i-1,1]-2*y[i,1])
+#NOTA: Estabas haciendo doble iteracion para algo que solo necesitaba solo una iteracion, en este caso es tolerable pues son numeros perqueños pero si tu iteracion
+# fuera sobre 1, 2, ...., 10000000000000000000000000000, tu programa te daria un pesimo rendimiento, asi que trata de evitar usar mucho bucles
+fun = lambda y, i, v, v_prim: 2*y[i,1]-y[i,1] + 0.5*(v/v_prim)**2*(y[i+1,1]+y[i-1,1]-2*y[i,1])   
+y[:, 1:3]= np.array([[fun(i, 1), fun(i, 2)] for i in range(99)])
+
 for i in range(1,99):
     for j in range(2,999):
         y[i,j+1] = 2*y[i,j]-y[i,j-1] + 0.5*(v/v_prim)**2*(y[i+1,j]+y[i-1,j]-2*y[i,j])
-    
+
+
+        
 #%%
 # Plot 
 
