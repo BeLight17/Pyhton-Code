@@ -1,4 +1,4 @@
-# bilait
+# uwu
 
 * Python.
 * Plot.
